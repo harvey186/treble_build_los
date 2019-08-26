@@ -2,7 +2,11 @@
 script=`realpath "$0"`
 folder=`dirname "$script"`
 root=`pwd`
+
 bash "$folder"/apply_phh_patches.sh treble_patches
+
+cd "$root"/device/phh/treble
+bash generate.sh lineage
 echo "Applying universal patches"
 cd "$root"/frameworks/base
 git am "$folder"/0001-Disable-vendor-mismatch-warning.patch
