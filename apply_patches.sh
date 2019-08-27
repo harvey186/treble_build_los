@@ -21,9 +21,9 @@ echo "Applying GSI-specific patches"
 cd "$root"/build/make
 git am "$folder"/0001-Revert-Enable-dyanmic-image-size-for-GSI.patch
 cd "$root"/device/phh/treble
-git revert 82b15278bad816632dcaeaed623b569978e9840d --no-edit #Update lineage.mk for LineageOS 16.0
-git revert df25576594f684ed35610b7cc1db2b72bc1fc4d6 --no-edit #exfat fsck/mkfs selinux label
-git am "$folder"/0001-treble-Add-overlay-lineage.patch
+#git revert 82b15278bad816632dcaeaed623b569978e9840d --no-edit #Update lineage.mk for LineageOS 16.0
+#git revert df25576594f684ed35610b7cc1db2b72bc1fc4d6 --no-edit #exfat fsck/mkfs selinux label
+#git am "$folder"/0001-treble-Add-overlay-lineage.patch
 cd "$root"/external/tinycompress
 git revert fbe2bd5c3d670234c3c92f875986acc148e6d792 --no-edit #tinycompress: Use generated kernel headers
 cd "$root"/vendor/lineage
