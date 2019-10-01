@@ -11,7 +11,7 @@ echo "Applying universal patches"
 cd "$root"/frameworks/base
 git am "$folder"/0001-Disable-vendor-mismatch-warning.patch
 git am "$folder"/0001-Keyguard-Show-shortcuts-by-default.patch
-git am "$folder"/0001-core-Add-support-for-MicroG.patch
+#git am "$folder"/0001-core-Add-support-for-MicroG.patch
 cd "$root"/lineage-sdk
 git am "$folder"/0001-sdk-Invert-per-app-stretch-to-fullscreen.patch
 cd "$root"/packages/apps/LineageParts
@@ -19,7 +19,7 @@ git am "$folder"/0001-LineageParts-Invert-per-app-stretch-to-fullscreen.patch
 echo ""
 echo "Applying GSI-specific patches"
 cd "$root"/build/make
-git am "$folder"/0001-Revert-Enable-dyanmic-image-size-for-GSI.patch
+#git am "$folder"/0001-Revert-Enable-dyanmic-image-size-for-GSI.patch
 cd "$root"/device/phh/treble
 #git revert 82b15278bad816632dcaeaed623b569978e9840d --no-edit #Update lineage.mk for LineageOS 16.0
 #git revert df25576594f684ed35610b7cc1db2b72bc1fc4d6 --no-edit #exfat fsck/mkfs selinux label
