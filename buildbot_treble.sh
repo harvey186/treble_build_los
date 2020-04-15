@@ -23,6 +23,8 @@ cd vendor/lineage
 sed -i '/LibreOfficeViewer*/d' config/common.mk
 cd ../../
 echo "Setting up build environment"
+export USE_CCACHE=1
+prebuilts/misc/linux-x86/ccache/ccache -M 50G
 source build/envsetup.sh &> /dev/null
 echo ""
 
