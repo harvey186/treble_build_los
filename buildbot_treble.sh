@@ -11,11 +11,12 @@ BUILD_DATE="$(date +%Y%m%d)"
 BL=$PWD/treble_build_los
 
 echo "Preparing local manifest"
-mkdir -p .repo/local_manifests
-cp $BL/manifest.xml .repo/local_manifests/manifest.xml
+#mkdir -p .repo/local_manifests
+#cp $BL/manifest.xml .repo/local_manifests/manifest.xml
 echo ""
 
 echo "Syncing repos"
+repo forall -vc "git reset --hard; git am --abort; git revert --abort; git am --abort"
 repo sync -c --force-sync --no-clone-bundle --no-tags -j$(nproc --all)
 echo ""
 
@@ -33,14 +34,14 @@ cd device/phh/treble
 git clean -fdx
 bash generate.sh lineage
 cd ../../..
-bash ~/treble_experimentations/apply-patches.sh treble_patches
+bash treble_experimentations/apply-patches.sh treble_patches
 echo ""
 
 echo "Applying universal patches"
 cd frameworks/base
 git am $BL/patches/0001-Disable-vendor-mismatch-warning.patch
 git am $BL/patches/0001-Keyguard-Show-shortcuts-by-default.patch
-git am $BL/patches/0001-core-Add-support-for-MicroG.patch
+#git am $BL/patches/0001-core-Add-support-for-MicroG.patch
 cd ../..
 cd lineage-sdk
 git am $BL/patches/0001-sdk-Invert-per-app-stretch-to-fullscreen.patch
@@ -58,11 +59,11 @@ cd build/make
 git am $BL/patches/0001-Revert-Enable-dyanmic-image-size-for-GSI.patch
 cd ../..
 cd device/phh/treble
-git revert 82b15278bad816632dcaeaed623b569978e9840d --no-edit # Update lineage.mk for LineageOS 16.0
-git am $BL/patches/0001-Remove-fsck-SELinux-labels.patch
-git am $BL/patches/0001-treble-Add-overlay-lineage.patch
-git am $BL/patches/0001-treble-Don-t-specify-config_wallpaperCropperPackage.patch
-git am $BL/patches/0001-Increase-system-partition-size-for-arm_ab.patch
+#git revert 82b15278bad816632dcaeaed623b569978e9840d --no-edit # Update lineage.mk for LineageOS 16.0
+#git am $BL/patches/0001-Remove-fsck-SELinux-labels.patch
+#git am $BL/patches/0001-treble-Add-overlay-lineage.patch
+#git am $BL/patches/0001-treble-Don-t-specify-config_wallpaperCropperPackage.patch
+#git am $BL/patches/0001-Increase-system-partition-size-for-arm_ab.patch
 cd ../../..
 cd external/tinycompress
 git revert fbe2bd5c3d670234c3c92f875986acc148e6d792 --no-edit # tinycompress: Use generated kernel headers
@@ -85,20 +86,24 @@ export WITH_SU=true
 mkdir -p ~/build-output/
 
 buildVariant() {
-	lunch ${1}-userdebug
-	make installclean
+	breakfast ${1}
+#	make installclean
 	make -j$(nproc --all) systemimage
-	make vndk-test-sepolicy
-	mv $OUT/system.img ~/build-output/lineage-16.0-$BUILD_DATE-UNOFFICIAL-${1}.img
+#	make vndk-test-sepolicy
+	cd $OUT
+	mv system.img e-pie-$BUILD_DATE-UNOFFICIAL-${1}.img
+	zip e-pie-$BUILD_DATE-UNOFFICIAL-${1}.img.zip e-pie-$BUILD_DATE-UNOFFICIAL-${1}.img
+	cd $PWD
+        bash ../copyserverecloud.sh $OUT/e-pie-$BUILD_DATE-UNOFFICIAL-${1}.img.zip && rm $OUT -R
+
 }
 
-buildVariant treble_arm_avN
-buildVariant treble_arm_bvN
-buildVariant treble_a64_avN
-buildVariant treble_a64_bvN
-buildVariant treble_arm64_avN
-buildVariant treble_arm64_bvN
-ls ~/build-output | grep 'lineage'
+buildVariant treble_arm_aeN
+buildVariant treble_arm_beN
+buildVariant treble_a64_aeN
+buildVariant treble_a64_beN
+buildVariant treble_arm64_aeN
+buildVariant treble_arm64_beN
 
 END=`date +%s`
 ELAPSEDM=$(($(($END-$START))/60))
