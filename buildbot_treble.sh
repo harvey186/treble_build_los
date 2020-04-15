@@ -19,7 +19,9 @@ echo "Syncing repos"
 repo forall -vc "git reset --hard; git am --abort; git revert --abort; git am --abort"
 repo sync -c --force-sync --no-clone-bundle --no-tags -j$(nproc --all)
 echo ""
-
+cd vendor/lineage
+sed -i '/LibreOfficeViewer*/d' config/common.mk
+cd ../../
 echo "Setting up build environment"
 source build/envsetup.sh &> /dev/null
 echo ""
@@ -104,7 +106,9 @@ buildVariant treble_a64_aeN
 buildVariant treble_a64_beN
 buildVariant treble_arm64_aeN
 buildVariant treble_arm64_beN
-
+cd vendor/lineage
+git clean -fdx
+cd ../../
 END=`date +%s`
 ELAPSEDM=$(($(($END-$START))/60))
 ELAPSEDS=$(($(($END-$START))-$ELAPSEDM*60))
