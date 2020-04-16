@@ -9,7 +9,7 @@ sleep 5
 START=`date +%s`
 BUILD_DATE="$(date +%Y%m%d)"
 BL=$PWD/treble_build_los
-
+ROOT=$PWD
 echo "Preparing local manifest"
 #mkdir -p .repo/local_manifests
 #cp $BL/manifest.xml .repo/local_manifests/manifest.xml
@@ -97,7 +97,7 @@ buildVariant() {
 	cd $OUT
 	mv system.img e-pie-$BUILD_DATE-UNOFFICIAL-${1}.img
 	zip e-pie-$BUILD_DATE-UNOFFICIAL-${1}.img.zip e-pie-$BUILD_DATE-UNOFFICIAL-${1}.img
-	cd $PWD
+	cd $ROOT
         bash ../copyserverecloud.sh $OUT/e-pie-$BUILD_DATE-UNOFFICIAL-${1}.img.zip && rm $OUT -R
 
 }
