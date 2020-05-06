@@ -1,6 +1,6 @@
 #!/bin/bash
 echo ""
-echo "LineageOS 16.x Treble Buildbot"
+echo "eOS-Pie Treble Buildbot"
 echo "ATTENTION: this script syncs repo on each run"
 echo "Executing in 5 seconds - CTRL-C to exit"
 echo ""
@@ -86,7 +86,7 @@ sleep 5
 echo ""
 
 export WITHOUT_CHECK_API=true
-export WITH_SU=true
+export WITH_SU=false
 mkdir -p ~/build-output/
 
 buildVariant() {
@@ -95,19 +95,19 @@ buildVariant() {
 	make -j$(nproc --all) systemimage
 #	make vndk-test-sepolicy
 	cd $OUT
-	mv system.img e-pie-$BUILD_DATE-UNOFFICIAL-${1}.img
-	zip e-pie-$BUILD_DATE-UNOFFICIAL-${1}.img.zip e-pie-$BUILD_DATE-UNOFFICIAL-${1}.img
-	cd $ROOT
-        bash ../copyserverecloud.sh $OUT/e-pie-$BUILD_DATE-UNOFFICIAL-${1}.img.zip && rm $OUT -R
+	mv system.img e-pie-$BUILD_DATE-JoJo-${1}.img
+	zip e-pie-$BUILD_DATE-JoJo-${1}.img.zip e-pie-$BUILD_DATE-JoJo-${1}.img
+#	cd $ROOT
+#        bash ../copyserverecloud.sh $OUT/e-pie-$BUILD_DATE-UNOFFICIAL-${1}.img.zip && rm $OUT -R
 
 }
 
-buildVariant treble_arm_aeN
-buildVariant treble_arm_beN
-buildVariant treble_a64_aeN
-buildVariant treble_a64_beN
+#buildVariant treble_arm_aeN
+#buildVariant treble_arm_beN
+#buildVariant treble_a64_aeN
+#buildVariant treble_a64_beN
 buildVariant treble_arm64_aeN
-buildVariant treble_arm64_beN
+#buildVariant treble_arm64_beN
 cd vendor/lineage
 git clean -fdx
 cd ../../
