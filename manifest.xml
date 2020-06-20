@@ -5,5 +5,4 @@
   <project name="phhusson/vendor_vndk" path="vendor/vndk" remote="github" revision="master" />
   <project name="phhusson/vendor_vndk-tests" path="vendor/vndk-tests" remote="github" revision="master" />
   <project name="phhusson/vendor_interfaces" path="vendor/interfaces" remote="github" revision="pie" />
-  <project name="phhusson/vendor_magisk" path="vendor/magisk" remote="github" revision="master" />
 </manifest>
