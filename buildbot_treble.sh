@@ -75,7 +75,11 @@ cd ../..
 cd vendor/lineage
 git am $BL/patches/0001-build_soong-Disable-generated_kernel_headers.patch
 cd ../..
-cd vendor/qcom/opensource/cryptfs_hw
+######## encryption disable  #############
+#
+rm vendor/qcom/opensource/cryptfs_hw
+#
+##############################
 git revert 6a3fc11bcc95d1abebb60e5d714adf75ece83102 --no-edit # cryptfs_hw: Use generated kernel headers
 git am $BL/patches/0001-Header-hack-to-compile-for-8974.patch
 cd ../../../..
@@ -86,7 +90,11 @@ sleep 5
 echo ""
 
 export WITHOUT_CHECK_API=true
+################### Root disable #############
+
 export WITH_SU=false
+
+###########################################
 mkdir -p ~/build-output/
 
 buildVariant() {
@@ -102,12 +110,16 @@ buildVariant() {
 
 }
 
+################# uncommand needed variant ###########
+
 #buildVariant treble_arm_aeN
 #buildVariant treble_arm_beN
 #buildVariant treble_a64_aeN
 #buildVariant treble_a64_beN
 buildVariant treble_arm64_aeN
 #buildVariant treble_arm64_beN
+
+#########################################################
 cd vendor/lineage
 git clean -fdx
 cd ../../
