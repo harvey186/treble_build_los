@@ -116,8 +116,8 @@ buildVariant() {
 #buildVariant treble_arm_beN
 #buildVariant treble_a64_aeN
 #buildVariant treble_a64_beN
-buildVariant treble_arm64_aeN
-#buildVariant treble_arm64_beN
+#buildVariant treble_arm64_aeN
+buildVariant treble_arm64_beN
 
 #########################################################
 cd vendor/lineage
